@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="./style.css" media="screen" charset="utf-8">
+	</head>
+	<body>
+		<script src="jquery-3.2.1.min.js" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			$(window).on('message', function(e){
+				console.log(e.originalEvent.data);
+								console.log('parent got msg callback');
+
+				iframe = document.getElementById('vid');
+				iframe.contentWindow.postMessage('sizing?','http://'+window.location.host);
+			});
+		</script>
+		<iframe id="vid" src="./player?src=vid.mp4" frameborder="0"></iframe>
+		<!-- <script src="______" type="text/javascript" charset="utf-8"></script> -->
+	</body>
+</html>
