@@ -1,22 +1,86 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-		<link rel="stylesheet" href="./style.css" media="screen" charset="utf-8">
-	</head>
-	<body>
-		<script src="jquery-3.2.1.min.js" charset="utf-8"></script>
-		<script type="text/javascript" charset="utf-8">
-			$(window).on('message', function(e){
-				console.log(e.originalEvent.data);
-								console.log('parent got msg callback');
 
-				iframe = document.getElementById('vid');
-				iframe.contentWindow.postMessage('sizing?','http://'+window.location.host);
-			});
-		</script>
-		<iframe id="vid" src="./player?src=vid.mp4" frameborder="0"></iframe>
-		<!-- <script src="______" type="text/javascript" charset="utf-8"></script> -->
-	</body>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="./style.css" media="screen" charset="utf-8">
+</head>
+
+<body>
+	<div class="MEPthumb" vid="vid.mp4" pic="vid.jpg"></div>
+	<div class="MEPthumb" vid="vid.mp4" pic="vid.jpg"></div>
+	<div class="MEPthumb" vid="vid.mp4" pic="vid.jpg"></div>
+	<div class="MEPthumb" vid="vid.mp4" pic="vid.jpg"></div>
+	<div class="MEPthumb" vid="vid.mp4" pic="vid.jpg"></div>
+	<!-- <iframe id="vid" src="./player?src=vid.mp4" frameborder="0"></iframe> -->
+	<script src="jquery-3.2.1.min.js" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+		var MEPthumbs = {
+			var: {
+				thumbs: null,
+				requestedVid: null,
+				frame: null
+			},
+			con: function(a) {
+				var b = 0,
+					c = 0,
+					d = !1,
+					e = function e() {
+						b++, a.funcs[b] ? (c++, a.funcs[b](function() {
+							c--, e(b)
+						})) : !c && !d && (a.done(), d = !0)
+					};
+				for (b = -1, i = 0; i < a.funcs.length && (e(i), i + 1 != a.size); i++);
+			},
+			injectImgs: function(cb) {
+				var that = this;
+				for (i = 0; i < this.var.thumbs.length; i++) {
+					console.log('url("' + that.var.thumbs[i].getAttribute('pic') + '")');
+					that.var.thumbs[i].style.backgroundImage = 'url("' + that.var.thumbs[i].getAttribute('pic') + '")'
+				}
+				cb();
+			},
+			ifrizzle: function (arg){
+
+			},
+			bindButtons: function(cb) {
+				var that = this;
+				that.var.thumbs.on('click', function(e){
+					that.var.requestedVid = $(this).attr('vid');
+				});
+				cb();
+			},
+			init: function(arg) {
+				var that = this;
+				this.var.thumbs = $('.MEPthumb');
+				that.con({
+					size: 100,
+					funcs: [
+						function(complete) {
+							that.injectImgs(complete);
+
+						},
+						function (complete){
+							that.bindButtons(complete);
+						}
+					],
+					done: function(arg) {
+						console.log('done woo');
+					}
+				});
+
+			}
+		};
+		MEPthumbs.init();
+		$(window).on('message', function(e) {
+			// console.log(e.originalEvent.data);
+			// console.log('parent got msg callback');
+			iframe = document.getElementById('vid');
+			iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
+		});
+	</script>
+	<!-- <script src="______" type="text/javascript" charset="utf-8"></script> -->
+</body>
+
 </html>
