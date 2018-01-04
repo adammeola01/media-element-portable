@@ -12,12 +12,33 @@
 			margin: 0;
 			padding: 0;
 			background: #222222;
+			width: 100%;
+			height: 100%;
+			position: absolute;
 		}
 
 		body>div {
-			margin-left: 10px;
-			margin-top: 10px;
+			padding 10px;
 			box-shadow: 5px 5px 0 #fff;
+			box-sizing: border-box;;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			.mejs__container{
+
+			}
+		}
+		.mejs__container{
+			width: 100%!important;
+			height: 100%!important;
+			min-width: 100%!important;
+			min-height: 100%!important;
+		}
+		video, .mejs__overlay{
+			width: 100%!important;
+			height: 100%!important;
+			min-width: 100%!important;
+			min-height: 100%!important;
 		}
 	</style>
 	<!-- <link rel="stylesheet" href="______.css" media="screen" charset="utf-8"> -->
@@ -25,28 +46,46 @@
 
 <body>
 	<div id="container"></div>
-	<script type="text/javascript">
-		// document.write('<video id="vid" src="../vid.mp4" id="player" style="left:10px; position: absolute"controls></video>');
-	</script>
+
 
 
 	<!-- <script src="______" type="text/javascript" charset="utf-8"></script> -->
 	<script src="./mediaelement-and-player.min.js" charset="utf-8"></script>
-
 	<script type="text/javascript">
-		window.parent.postMessage("pinit", 'http://' + window.location.host);
+		window.parent.postMessage("CommC-vid-init", 'http://' + window.location.host);
 		window.addEventListener("message", function(e) {
-			console.log('//////////');
-			console.log(e.data);
-		}, false);
-		// var vid = document.getElementById('vid');
-		// var container = document.getElementById('container');
-		// var sizeVid = function(w, h) {
-		// 	vid.style.width = (w - 20) + 'px';
-		// 	vid.style.height = (h - 20) + 'px';
-		// }
+			var arr = e.data.split('CommC-vid-');
+			if(arr.length - 1) {
+				arr = arr[1].split('-');
+				switch (arr[0]) {
+					case 'file':
+						console.log('sdfgdsfgd ');
+						console.log('sdfgdsfgd ');
+						console.log(arr[1]);
+						console.log('sdfgdsfgd ');
+						console.log('sdfgdsfgd ');
+						console.log('sdfgdsfgd ');
+						break;
+					default:
 
-		// sizeVid(window.innerWidth, window.innerHeight);
+				}
+				var container = document.getElementById('container');
+				container.innerHTML = '<video id="vid" src="../'+arr[1]+'" id="player" style="left:10px; position: absolute"controls></video>';
+				var player = new MediaElementPlayer(vid, {
+					success: function(mediaElement, originalNode, instance) {
+							window.parent.postMessage("CommC-show", 'http://' + window.location.host);
+							// console.log('+++++++++++++');
+							// console.log('+++++++++++++');
+							// console.log('+++++++++++++');
+							// console.log('+++++++++++++');
+							// console.log('+++++++++++++');
+
+					}
+				});
+
+			}
+		}, false);
+
 		// var player = new MediaElementPlayer(vid, {
 		// 	success: function(mediaElement, originalNode, instance) {
 		// 		setTimeout(function() {

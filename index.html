@@ -41,18 +41,65 @@
 				}
 				cb();
 			},
-			ifrizzle: function (arg){
+			ifrizzle: {
+				vid: null,
+				idc: -1,
+				id: function() {
+					this.idc++;
+					if(this.idc > 4) this.idc = 0;
+					return this.idc;
+				},
+				show: function(el) {
+					iframe = document.getElementById('vid'+this.idc);
 
+					iframe.contentWindow.postMessage('CommC-vid-file-'+this.vid, 'http://' + window.location.host);
+				},
+				inject: function(el, cb) {
+					el.innerHTML = '<iframe id="vid' + this.id() + '" src="./player" frameborder="0"></iframe>';
+					cb();
+				}
 			},
 			bindButtons: function(cb) {
 				var that = this;
-				that.var.thumbs.on('click', function(e){
-					that.var.requestedVid = $(this).attr('vid');
+				that.var.thumbs.on('click', function(){
+					var el = this;
+					that.ifrizzle.inject(this, function (){
+						that.ifrizzle.vid = el.getAttribute('vid');
+					});
 				});
 				cb();
 			},
-			init: function(arg) {
+			unbindButtons: function(cb) {
 				var that = this;
+				that.var.thumbs.off('click');
+				// cb();
+			},
+			init: function(arg) {
+
+				var that = this;
+				var data;
+				var arr;
+				$(window).on('message', function(e) {
+					data = e.originalEvent.data;
+					console.log(data.split('CommC-vid-'));
+					arr = data.split('CommC-vid-');
+					// arr = data.split('CommC-vid-');
+					if(arr.length - 1) {
+						switch (arr[1]) {
+							case 'init':
+								console.log('sdfgd');
+								that.ifrizzle.show();
+								// iframe = document.getElementById('vid');
+								// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
+								break;
+							default:
+
+						}
+					}
+					// that.ifrizzle.show();
+					// iframe = document.getElementById('vid');
+					// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
+				});
 				this.var.thumbs = $('.MEPthumb');
 				that.con({
 					size: 100,
@@ -61,7 +108,7 @@
 							that.injectImgs(complete);
 
 						},
-						function (complete){
+						function(complete) {
 							that.bindButtons(complete);
 						}
 					],
@@ -73,12 +120,6 @@
 			}
 		};
 		MEPthumbs.init();
-		$(window).on('message', function(e) {
-			// console.log(e.originalEvent.data);
-			// console.log('parent got msg callback');
-			iframe = document.getElementById('vid');
-			iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
-		});
 	</script>
 	<!-- <script src="______" type="text/javascript" charset="utf-8"></script> -->
 </body>
