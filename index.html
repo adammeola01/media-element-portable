@@ -42,6 +42,7 @@
 				cb();
 			},
 			ifrizzle: {
+				file: null,
 				vid: null,
 				idc: -1,
 				id: function() {
@@ -49,22 +50,31 @@
 					if(this.idc > 4) this.idc = 0;
 					return this.idc;
 				},
-				show: function(el) {
-					iframe = document.getElementById('vid'+this.idc);
+				fillScreen: function (arg){
 
-					iframe.contentWindow.postMessage('CommC-vid-file-'+this.vid, 'http://' + window.location.host);
+					// this.vid.style.width = '100%';
+					// this.vid.style.height = '100%';
+					// this.vid.style.float = 'none';
+					// this.vid.style.position = 'fixed';
+					// this.vid.style.padding = '0';
+				},
+				sendFile: function(el) {
+					// iframe = document.getElementById('vid'+this.idc);
+					// iframe.contentWindow.postMessage('comm-vid-file-'+this.file, 'http://' + window.location.host);
 				},
 				inject: function(el, cb) {
-					el.innerHTML = '<iframe id="vid' + this.id() + '" src="./player" frameborder="0"></iframe>';
-					cb();
+					// el.innerHTML = '<iframe id="vid' + this.id() + '" src="./player" frameborder="0"></iframe>';
+					// cb();
 				}
 			},
 			bindButtons: function(cb) {
 				var that = this;
 				that.var.thumbs.on('click', function(){
+					that.ifrizzle.vid = this;
+					that.unbindButtons();
 					var el = this;
 					that.ifrizzle.inject(this, function (){
-						that.ifrizzle.vid = el.getAttribute('vid');
+						that.ifrizzle.file = el.getAttribute('vid');
 					});
 				});
 				cb();
@@ -75,20 +85,22 @@
 				// cb();
 			},
 			init: function(arg) {
-
 				var that = this;
 				var data;
 				var arr;
 				$(window).on('message', function(e) {
 					data = e.originalEvent.data;
-					console.log(data.split('CommC-vid-'));
-					arr = data.split('CommC-vid-');
-					// arr = data.split('CommC-vid-');
+					arr = data.split('comm-vid-');
 					if(arr.length - 1) {
-						switch (arr[1]) {
+						arr = arr[1].split('-');
+						switch (arr[0]) {
 							case 'init':
-								console.log('sdfgd');
-								that.ifrizzle.show();
+								that.ifrizzle.sendFile();
+								// iframe = document.getElementById('vid');
+								// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
+								break;
+							case 'show':
+								that.ifrizzle.fillScreen();
 								// iframe = document.getElementById('vid');
 								// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
 								break;
@@ -114,6 +126,7 @@
 					],
 					done: function(arg) {
 						console.log('done woo');
+
 					}
 				});
 
