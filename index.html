@@ -14,13 +14,15 @@
 	<div class="MEPthumb" vid="vid.mp4" pic="vid.jpg"></div>
 	<div class="MEPthumb" vid="vid.mp4" pic="vid.jpg"></div>
 	<!-- <iframe id="vid" src="./player?src=vid.mp4" frameborder="0"></iframe> -->
+	<div id="MEPplayer"></div>
 	<script src="jquery-3.2.1.min.js" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
 		var MEPthumbs = {
 			var: {
 				thumbs: null,
 				requestedVid: null,
-				frame: null
+				frame: null,
+				player: document.getElementById('MEPplayer')
 			},
 			con: function(a) {
 				var b = 0,
@@ -42,6 +44,7 @@
 				cb();
 			},
 			ifrizzle: {
+				parent: null,
 				file: null,
 				vid: null,
 				idc: -1,
@@ -59,12 +62,19 @@
 					// this.vid.style.padding = '0';
 				},
 				sendFile: function(el) {
-					// iframe = document.getElementById('vid'+this.idc);
-					// iframe.contentWindow.postMessage('comm-vid-file-'+this.file, 'http://' + window.location.host);
+					console.log('sendFile');
+					iframe = document.getElementById('vid'+this.idc);
+					iframe.contentWindow.postMessage('comm-vid-file-'+this.file, 'http://' + window.location.host);
 				},
 				inject: function(el, cb) {
+					this.parent.var.player.innerHTML = '<iframe id="vid' + this.id() + '" src="./player" frameborder="0"></iframe>';
 					// el.innerHTML = '<iframe id="vid' + this.id() + '" src="./player" frameborder="0"></iframe>';
-					// cb();
+					this.parent.var.player.style.display = 'block';
+					var that = this;
+					setTimeout(function(){
+						that.parent.var.player.style.opacity = '1';
+					},0);
+					cb();
 				}
 			},
 			bindButtons: function(cb) {
@@ -82,10 +92,10 @@
 			unbindButtons: function(cb) {
 				var that = this;
 				that.var.thumbs.off('click');
-				// cb();
 			},
 			init: function(arg) {
 				var that = this;
+				that.ifrizzle.parent = this;
 				var data;
 				var arr;
 				$(window).on('message', function(e) {
@@ -99,11 +109,11 @@
 								// iframe = document.getElementById('vid');
 								// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
 								break;
-							case 'show':
-								that.ifrizzle.fillScreen();
-								// iframe = document.getElementById('vid');
-								// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
-								break;
+							// case 'show':
+							// 	that.ifrizzle.fillScreen();
+							// 	// iframe = document.getElementById('vid');
+							// 	// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
+							// 	break;
 							default:
 
 						}
