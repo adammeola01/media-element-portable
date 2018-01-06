@@ -104,18 +104,14 @@
 					if(arr.length - 1) {
 						arr = arr[1].split('-');
 						switch (arr[0]) {
-							case 'init':
+							case 'windowReady':
 								that.ifrizzle.sendFile();
-								// iframe = document.getElementById('vid');
-								// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
 								break;
-							case 'show':
-								that.ifrizzle.fillScreen(function(){
-
-								});
-								// iframe = document.getElementById('vid');
-								// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
+							case 'vidReady':
+								that.ifrizzle.fillScreen(function(){});
 								break;
+							case 'close':
+								console.log('outer');
 							default:
 
 						}
