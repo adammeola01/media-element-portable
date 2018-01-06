@@ -14,6 +14,7 @@
 	<div class="MEPthumb" vid="vid.mp4" pic="vid.jpg"></div>
 	<div class="MEPthumb" vid="vid.mp4" pic="vid.jpg"></div>
 	<!-- <iframe id="vid" src="./player?src=vid.mp4" frameborder="0"></iframe> -->
+	<div id="MEPtransit"></div>
 	<div id="MEPplayer"></div>
 	<script src="jquery-3.2.1.min.js" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
@@ -45,7 +46,10 @@
 			},
 			ifrizzle: {
 				parent: null,
-				file: null,
+				file: {
+					vid: null,
+					pic: null
+				},
 				vid: null,
 				idc: -1,
 				id: function() {
@@ -53,27 +57,23 @@
 					if(this.idc > 4) this.idc = 0;
 					return this.idc;
 				},
-				fillScreen: function (arg){
-
-					// this.vid.style.width = '100%';
-					// this.vid.style.height = '100%';
-					// this.vid.style.float = 'none';
-					// this.vid.style.position = 'fixed';
-					// this.vid.style.padding = '0';
-				},
-				sendFile: function(el) {
-					console.log('sendFile');
-					iframe = document.getElementById('vid'+this.idc);
-					iframe.contentWindow.postMessage('comm-vid-file-'+this.file, 'http://' + window.location.host);
-				},
-				inject: function(el, cb) {
-					this.parent.var.player.innerHTML = '<iframe id="vid' + this.id() + '" src="./player" frameborder="0"></iframe>';
-					// el.innerHTML = '<iframe id="vid' + this.id() + '" src="./player" frameborder="0"></iframe>';
+				fillScreen: function (cb){
 					this.parent.var.player.style.display = 'block';
 					var that = this;
 					setTimeout(function(){
 						that.parent.var.player.style.opacity = '1';
 					},0);
+					cb();
+				},
+				restoreView: function (arg){
+
+				},
+				sendFile: function(el) {
+					iframe = document.getElementById('vid'+this.idc);
+					iframe.contentWindow.postMessage('comm-vid-file-'+JSON.stringify(this.file), 'http://' + window.location.host);
+				},
+				inject: function(el, cb) {
+					this.parent.var.player.innerHTML = '<iframe id="vid' + this.id() + '" src="./player" frameborder="0"></iframe>';
 					cb();
 				}
 			},
@@ -84,7 +84,7 @@
 					that.unbindButtons();
 					var el = this;
 					that.ifrizzle.inject(this, function (){
-						that.ifrizzle.file = el.getAttribute('vid');
+						that.ifrizzle.file.vid = el.getAttribute('vid');
 					});
 				});
 				cb();
@@ -109,11 +109,13 @@
 								// iframe = document.getElementById('vid');
 								// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
 								break;
-							// case 'show':
-							// 	that.ifrizzle.fillScreen();
-							// 	// iframe = document.getElementById('vid');
-							// 	// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
-							// 	break;
+							case 'show':
+								that.ifrizzle.fillScreen(function(){
+
+								});
+								// iframe = document.getElementById('vid');
+								// iframe.contentWindow.postMessage('shizzle', 'http://' + window.location.host);
+								break;
 							default:
 
 						}
