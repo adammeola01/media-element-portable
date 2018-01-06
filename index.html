@@ -23,7 +23,8 @@
 				thumbs: null,
 				requestedVid: null,
 				frame: null,
-				player: document.getElementById('MEPplayer')
+				player: document.getElementById('MEPplayer'),
+				transit: document.getElementById('MEPtransit')
 			},
 			con: function(a) {
 				var b = 0,
@@ -65,8 +66,11 @@
 					},0);
 					cb();
 				},
+				killSpinner: function (){
+					console.log('kill spinner here');
+				},
 				restoreView: function (arg){
-
+					this.parent.var.player.innerHTML = '';
 				},
 				sendFile: function(el) {
 					iframe = document.getElementById('vid'+this.idc);
@@ -80,11 +84,11 @@
 			bindButtons: function(cb) {
 				var that = this;
 				that.var.thumbs.on('click', function(){
-					that.ifrizzle.vid = this;
 					that.unbindButtons();
 					var el = this;
 					that.ifrizzle.inject(this, function (){
 						that.ifrizzle.file.vid = el.getAttribute('vid');
+						that.ifrizzle.file.pic = el.getAttribute('pic');
 					});
 				});
 				cb();
@@ -106,12 +110,16 @@
 						switch (arr[0]) {
 							case 'windowReady':
 								that.ifrizzle.sendFile();
+								that.ifrizzle.fillScreen(function(){});
 								break;
 							case 'vidReady':
-								that.ifrizzle.fillScreen(function(){});
+								that.ifrizzle.killSpinner();
 								break;
 							case 'close':
 								console.log('outer');
+								that.ifrizzle.restoreView();
+
+
 							default:
 
 						}
