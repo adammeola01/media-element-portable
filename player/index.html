@@ -10,14 +10,10 @@
 
 <body>
 	<div id="container"></div>
-	<div id="closer"></div>
-
-
-
-	<!-- <script src="______" type="text/javascript" charset="utf-8"></script> -->
+	<div id="closer"><div onclick="closeThis()" id="close"></div></div>
 	<script src="./mediaelement-and-player.min.js" charset="utf-8"></script>
 	<script type="text/javascript">
-		var contClicked = function (arg){
+		var contClicked = function(arg) {
 			console.log('asdfasdf');
 		};
 		window.parent.postMessage("comm-vid-windowReady-1", 'http://' + window.location.host);
@@ -26,7 +22,9 @@
 		var closeThis = function(arg) {
 			window.parent.postMessage("comm-vid-close-1", 'http://' + window.location.host);
 		};
-		window.addEventListener("message", function(e) {
+
+
+		var messageIn = function (e){
 			var arr = e.data.split('comm-vid-');
 			if (arr.length - 1) {
 				arr = arr[1].split('-');
@@ -36,24 +34,19 @@
 						container.innerHTML = '<video controls id="vid" src="../' + file.vid + '" id="player" style="left:10px; position: absolute"></video>';
 						var player = new MediaElementPlayer(vid, {
 							alwaysShowControls: false,
-							poster: '../'+file.pic,
+							poster: '../' + file.pic,
 							clickToPlayPause: true,
 							success: function(mediaElement, originalNode, instance) {
 								window.parent.postMessage("comm-vid-vidReady-1", 'http://' + window.location.host);
-								setTimeout(function() {
-									document.getElementById('closer').innerHTML = '<div onclick="closeThis()" id="close"></div>';
-								}, 0);
-								setTimeout(function(){
-									console.log(player.paused);
-								},7000);
 							}
 						});
 						break;
 					default:
-
 				}
 			}
-		}, false);
+		};
+
+		window.addEventListener("message", messageIn, false);
 	</script>
 </body>
 

@@ -79,6 +79,14 @@ video {
 	left: 5%;
 }
 
+.mejs__overlay-play{
+	background-image: url("./dot.png")!important;
+	background-position: center;
+	background-size: 125px;
+	background-repeat: no-repeat;
+
+}
+
 * {
 	outline: none!important;
 }
