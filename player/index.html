@@ -3,89 +3,8 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Loli Mari - Video</title>
-
-	<link rel="stylesheet" href="./mediaelementplayer.min.css">
-	<style>
-		body,
-		html {
-			margin: 0;
-			padding: 0;
-			background: #222222;
-			width: 100%;
-			height: 100%;
-			position: absolute;
-		}
-
-		body>div {
-			box-shadow: 5px 5px 0 #fff;
-			box-sizing: border-box;
-			;
-			width: 100%;
-			height: 100%;
-			position: absolute;
-			.mejs__container {}
-		}
-
-		.mejs__container {
-			width: 100%!important;
-			height: 100%!important;
-			min-width: 100%!important;
-			min-height: 100%!important;
-		}
-
-		video,
-		.mejs__overlay {
-			width: 100%!important;
-			height: 100%!important;
-			min-width: 100%!important;
-			min-height: 100%!important;
-			position: absolute!important;
-			left: 0!important;
-			top: 0!important;
-		}
-
-		#closer{
-			position: absolute;
-			width: 0;
-			height: 0;
-			top: 20px;
-			right: 20px;
-		}
-		#close {
-			position: absolute;
-			width: 100px;
-			height: 100px;
-			top: 0;
-			right: 20px;
-			background-image: url('./close.png');
-			background-size: 100%;
-			background-repeat: no-repeat;
-			z-index: 9999999;
-			cursor: pointer;
-			display: block;
-		}
-
-		#close:active {
-			opacity: 0.8;
-			transform: matrix(0.85, 0, 0, 0.85, 0, 0);
-			-webkit-transform: matrix(0.85, 0, 0, 0.85, 0, 0);
-			-moz-transform: matrix(0.85, 0, 0, 0.85, 0, 0);
-			-ms-transform: matrix(0.85, 0, 0, 0.85, 0, 0);
-			-o-transform: matrix(0.85, 0, 0, 0.85, 0, 0);
-		}
-		.mejs__poster{
-			width: 90%!important;
-			height: 90%!important;
-			position: absolute;
-			top: 5%;
-			left: 5%;
-		}
-
-		* {
-			outline: none!important;
-		}
-	</style>
+	<title></title>
+	<link rel="stylesheet" href="./style.css">
 	<!-- <link rel="stylesheet" href="______.css" media="screen" charset="utf-8"> -->
 </head>
 
@@ -133,26 +52,8 @@
 					default:
 
 				}
-
-
-
 			}
 		}, false);
-
-		// var player = new MediaElementPlayer(vid, {
-		// 	success: function(mediaElement, originalNode, instance) {
-		// 		setTimeout(function() {
-		// 			window.parent.postMessage("gobar", 'http://' + window.location.host);
-		// 			console.log('+++++++++++++');
-		// 			console.log('+++++++++++++');
-		// 			console.log('+++++++++++++');
-		// 			console.log('+++++++++++++');
-		// 			console.log('+++++++++++++');
-		// 			console.log(window.location.href);
-		// 			console.log(getParameterByName('src'));
-		// 		}, 2000);
-		// 	}
-		// });
 	</script>
 </body>
 
