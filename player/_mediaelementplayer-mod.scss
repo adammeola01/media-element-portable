@@ -1,0 +1,134 @@
+.mejs__overlay-button {
+    background: url(mejs-controls2.svg) no-repeat;
+    background-position: 0 -39px;
+    height: 80px;
+    width: 80px;
+}
+
+// .mejs-overlay:hover > .mejs-overlay-button {
+//     background-position: -80px -39px;
+// }
+//
+//
+// .mejs-play > button {
+//     background-position: 0 0;
+// }
+//
+// .mejs-pause > button {
+//     background-position: -20px 0;
+// }
+//
+// .mejs-replay > button {
+//     background-position: -160px 0;
+// }
+// @-webkit-keyframes buffering-stripes {
+//     from {
+//         background-position: 0 0;
+//     }
+//     to {
+//         background-position: 30px 0;
+//     }
+// }
+//
+// @keyframes buffering-stripes {
+//     from {
+//         background-position: 0 0;
+//     }
+//     to {
+//         background-position: 30px 0;
+//     }
+// }
+// .mejs-fullscreen-button > button {
+//     background-position: -80px 0;
+// }
+//
+// .mejs-unfullscreen > button {
+//     background-position: -100px 0;
+// }
+//
+// /* End: Fullscreen */
+//
+// /* Start: Mute/Volume */
+// .mejs-mute > button {
+//     background-position: -60px 0;
+// }
+//
+// .mejs-unmute > button {
+//     background-position: -40px 0;
+// }
+// .mejs-captions-button > button {
+//     background-position: -140px 0;
+// }
+//
+
+//overrides
+
+
+.mejs__container {
+	width: 100%!important;
+	height: 100%!important;
+	min-width: 100%!important;
+	min-height: 100%!important;
+}
+
+.mejs__overlay,
+video {
+	width: 100%!important;
+	height: 100%!important;
+	min-width: 100%!important;
+	min-height: 100%!important;
+	position: absolute!important;
+	left: 0!important;
+	top: 0!important;
+}
+
+#closer {
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: 20px;
+	right: 20px;
+}
+
+#close {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	top: 0;
+	right: 20px;
+	background-image: url("./close.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	z-index: 9999999;
+	cursor: pointer;
+	display: block;
+}
+
+#close:active {
+	opacity: 0.8;
+	transform: matrix(0.85, 0, 0, 0.85, 0, 0);
+	-webkit-transform: matrix(0.85, 0, 0, 0.85, 0, 0);
+	-moz-transform: matrix(0.85, 0, 0, 0.85, 0, 0);
+	-ms-transform: matrix(0.85, 0, 0, 0.85, 0, 0);
+	-o-transform: matrix(0.85, 0, 0, 0.85, 0, 0);
+}
+
+.mejs__poster {
+	width: 90%!important;
+	height: 90%!important;
+	position: absolute;
+	top: 5%;
+	left: 5%;
+}
+
+.mejs__overlay-play{
+	background-image: url("./dot.png")!important;
+	background-position: center;
+	background-size: 125px;
+	background-repeat: no-repeat;
+
+}
+
+* {
+	outline: none!important;
+}
